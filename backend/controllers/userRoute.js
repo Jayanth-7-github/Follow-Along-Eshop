@@ -7,7 +7,7 @@ const bcrypt=require("bcrypt")
 const jwt=require("jsonwebtoken")
 const { sendMail } =require("../utils/mail")
 let userRoute= express.Router()
-
+const upload =require("../middelware/multer")
   
 
 
@@ -85,9 +85,36 @@ userRoute.post("/login", async (req, res) => {
   }));
 
 
- userRoute.get("/activation/:token",async(req,res,next)=>{
-         
-  })
+  userRoute.get("/activation/:token",catchAsyncError(async(req,res,next)=>{
+             
+    let token=req.params.token
+    if(!token){
+     next(new Errorhadler("token not found",404))
+    }
+    jwt.verify(token, process.env.SECRET, async(err, decoded)=> {
+       if(err){
+         next(new Errorhadler("token is not valid",400))
+       }
+       
+       let id=decoded.id
+       await UserModel.findByIdAndUpdate(id,{isActivated:true})
+       
+       
+       res.status(200).json({status:true,message:"activation is completed"})
+
+   });
+   
+
+}))
+
+
+userRoute.post("/upload", upload.single("photo"),catchAsyncError(async(req,res,next)=>{
+        if(!req.file){
+          next(new Errorhadler("File not found",400))
+        }
+
+        res.status(200).json("Uploaded")
+}))
 
 
 

@@ -1,0 +1,15 @@
+meta {
+  name: uplod
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8689/user/upload
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  photo: @file(C:\Users\K Jayanth\OneDrive\圖片\coimbatore.jpg)
+}
