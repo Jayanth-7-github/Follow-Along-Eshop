@@ -2,9 +2,10 @@ import React from "react";
 import {Link} from "react-router-dom"
 function Navbar(){
      return(
-        <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/login">Loginpage</Link></li>
+        <ul className="flex justify-between ml-10 mr-10">
+            <li className="border-4 border-double font-bold  w-[12%] bg-blue-500 text-white hover:bg-green-600   animate-ping"><Link to="/">Home</Link></li>
+            <li className="border-4 border-double font-bold  w-[12%] bg-blue-500 text-white hover:bg-green-600   animate-ping"><Link to="/login">Login</Link></li>
+
         </ul>
      )
 }
