@@ -47,10 +47,10 @@ function Signup(props) {
 
     try {
       console.log("hhhh")
-      await axios.post("http://localhost:8689/user/signup",{
+      await axios.post("http://localhost:1111/user/signup",{
         name,email,password
       })
-      console.log("regiterdd")
+      console.log("successfully registered")
     } catch (error) {
       console.log(error)
       seterr(error.message)

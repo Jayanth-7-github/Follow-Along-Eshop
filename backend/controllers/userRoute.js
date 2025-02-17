@@ -148,7 +148,7 @@ userRoute.post(
     if (!user) {
       next(new Errorhadler("pls signup", 400));
     }
-    console.log(user,"***********")
+    console.log(user,"****")
 
 
 
@@ -157,7 +157,7 @@ userRoute.post(
     }
     let isMatching = await bcrypt.compare(password, user.password);
   
-    console.log(isMatching,"****************************")
+    console.log(isMatching,"****")
     if (!isMatching) {
       next(new Errorhadler("passwordword is incorrect", 400));
     }

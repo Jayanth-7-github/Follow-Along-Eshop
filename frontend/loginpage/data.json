@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Product 1",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "This is a limited-time product offering a perfect balance of quality and value. Grab it while it lasts!",
+        "price": 100
+      },
+      {
+        "name": "Product 2",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "This is another high-quality product designed for everyday use. Get yours today!",
+        "price": 200
+      },
+      {
+        "name": "Product 3",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 400
+      }, {
+        "name": "Product 4",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 500
+      }, {
+        "name": "Product 5",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 600
+      }, {
+        "name": "Product 6",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 700
+      }, {
+        "name": "Product 7",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 800
+      }, {
+        "name": "Product 8",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 900
+      }, {
+        "name": "Product 9",
+        "image": "https://rukminim2.flixcart.com/image/832/832/xif0q/t-shirt/k/8/b/-original-imagyk8qaafzmfbc.jpeg?q=70&crop=false",
+        "description": "Experience premium quality and durability with this product. Don't miss out!",
+        "price": 1000
+      }
+]

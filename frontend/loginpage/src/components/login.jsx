@@ -33,10 +33,10 @@ function Login(props) {
   
       try {
         console.log("hhhh")
-        await axios.post("http://localhost:8689/user/login",{
+        await axios.post("http://localhost:1111/user/login",{
           email,password
         })
-        console.log("registered")
+        console.log("Login successful")
       } catch (error) {
         console.log(error)
         seterror(error.message)
