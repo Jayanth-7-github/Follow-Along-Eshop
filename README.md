@@ -74,7 +74,7 @@ MongoDB Atlas & Mongoose – Database management
 dotenv – Manage environment variables
 Cors & Body-Parser – Middleware for API requests
 
-## Milestone 3: User Model, Controller & File Uploads
+## Milestone 4: User Model, Controller & File Uploads
 
 # Overview
 
