@@ -2,18 +2,61 @@ import React from "react";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { useState } from "react";
+import axios from "axios";
+
 
 function Signup(props) {
   let [hide, sethide] = useState(true);
+  let [hided, sethided] = useState(true);
+  let [err, seterr] = useState("");
+
   const handlehide = () => {
     sethide(!hide);
   };
-
-  let [hided, sethided] = useState(true);
   const handlehided = () => {
     sethided(!hided);
   };
 
+  const [data,setData]=useState({
+    name:"",
+    email:"",
+    password:"",
+    confirmpass:""
+  })
+   
+  
+
+  const handleform = (e) => {
+    setData({...data,[e.target.name]:e.target.value})
+    console.log(data);
+  }
+
+
+   const handlesubmit = async()=>{
+    
+    const {name,email,password,confirmpass} =data
+    if(password!==confirmpass){
+      seterr("Passwords do not match")
+      return
+    }
+    if(!name || !email || !password || !confirmpass){ 
+      seterr("Please fill all fields")
+      return
+    }
+
+
+    try {
+      console.log("hhhh")
+      await axios.post("http://localhost:8689/user/signup",{
+        name,email,password
+      })
+      console.log("regiterdd")
+    } catch (error) {
+      console.log(error)
+      seterr(error.message)
+    }
+
+   }
   return (
     <>
       <div className="border-2 w-[500px] mt-10 ml-15">
@@ -25,22 +68,28 @@ function Signup(props) {
           </label>
           <input
             type="text"
+            name="name"
             className="border-1 w-8/10 block m-auto h-8 rounded-md"
+            onChange={handleform}
           />
           <label htmlFor="" className="block ml-10 mt-10">
             Email address
           </label>
           <input
+          name="email"
             type="text"
             className="border-1 w-8/10 block m-auto h-8 rounded-md"
+            onChange={handleform}
           />
           <label htmlFor="" className="block ml-10 mt-5 ">
             Password
           </label>
           <div className="flex  w-8/10 m-auto">
             <input
+            name="password"
               type={hide ? "password" : "text"}
               className="border-1 w-[140%] block m-auto h-8 rounded-md rounded-bl-md"
+              onChange={handleform}
             />
 
             {hide ? (
@@ -61,8 +110,10 @@ function Signup(props) {
           </label>
           <div className="flex  w-8/10 m-auto">
             <input
+            name="confirmpass"
               type={hided ? "password" : "text"}
               className="border-1 w-[140%] block m-auto h-8 rounded-md rounded-bl-md"
+              onChange={handleform}
             />
 
             {hided ? (
@@ -82,16 +133,17 @@ function Signup(props) {
             <div className="flex  w-[48%]">
               <input type="checkbox" />
               <label htmlFor="">Remember me</label>
+              <p className="text-red-400 ">{err}</p>
             </div>
 
             {/* <h6 className="font-semibold text-blue-700">Forgot password</h6> */}
           </div>
 
           <button
+            onClick={handlesubmit}
             type="submit"
             className=" w-8/10 block m-auto bg-blue-500 rounded-m mt-5 h-8 rounded-md"
           >
-            {" "}
             Signup
           </button>
 
