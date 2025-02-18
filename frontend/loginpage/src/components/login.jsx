@@ -1,118 +1,88 @@
-import React from "react";
-import { FaRegEye } from "react-icons/fa6";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { useState } from "react";
+import React, { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import axios from "axios";
-function Login(props) { 
+import { useNavigate } from "react-router-dom";
 
-    let [hide,sethide]=useState(true)
-    let [error,seterror]=useState("")
-    const handlehide=()=>{
-      sethide(!hide)
+function Login(props) {
+  const navigate = useNavigate();
+  const [hide, setHide] = useState(true);
+  const [error, setError] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const handleHide = () => setHide(!hide);
+
+  const handleForm = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    const { email, password } = data;
+    if (!email || !password) {
+      setError("Please fill all fields");
+      return;
     }
-    let [data,setData] =useState({
-      email: "",
-      password: ""
-    })
 
-
-    const handleform = (e) => {
-      setData({...data,[e.target.name]:e.target.value})
-      console.log(data);
+    try {
+      const response = await axios.post("http://localhost:1111/user/login", { email, password });
+      console.log("Login successful", response.data);
+      navigate("/");
+    } catch (error) {
+      setError(error.message);
     }
-
-
-
-    const handlesubmit = async()=>{
-    
-      const {email,password} =data
-      if(!email || !password ){ 
-        seterror("Please fill all fields")
-        return
-      }
-  
-      try {
-        console.log("hhhh")
-        await axios.post("http://localhost:1111/user/login",{
-          email,password
-        })
-        console.log("Login successful")
-      } catch (error) {
-        console.log(error)
-        seterror(error.message)
-      }
-  
-     }
-
-
-
+  };
 
   return (
-    <>
-      <div className="border-2 w-[500px] mt-10 ml-20">
-        <h1 className="text-3xl font-bold text-center">
-          Login to your account
-        </h1>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-96">
+        <h1 className="text-2xl font-bold text-center mb-6">Login to Your Account</h1>
+        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+        
+        <label className="block text-gray-700">Email Address</label>
+        <input
+          type="email"
+          name="email"
+          onChange={handleForm}
+          className="w-full px-3 py-2 border rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-        <div className="w-7/10 h-85 m-auto mt-10 mb-10 shadow-lg">
-          <label htmlFor="" className="block ml-10 mt-10">
-            Email address
-          </label>
+        <label className="block mt-4 text-gray-700">Password</label>
+        <div className="relative">
           <input
-            type="text"
-            name="email"
-            onChange={handleform}
-            className="border-1 w-8/10 block m-auto h-8 rounded-md"
-          />
-          <label htmlFor="" className="block ml-10 mt-5 ">
-            Password
-          </label>
-          <div className="flex  w-8/10 m-auto">
-            <input
+            type={hide ? "password" : "text"}
             name="password"
-            onChange={handleform}
-              type= {hide?"password":"text"}
-              className="border-1 w-[88%] block m-auto h-8 rounded-md rounded-bl-md"/>
-
-              {hide?<FaRegEye className="w-[12%] h-5 mt-1" onClick={handlehide}/>:<FaRegEyeSlash onClick={handlehide}/>}
-            
-          </div>
-
-          <div className="flex m-auto mt-5  w-[80%]  justify-between ">
-            <div className="flex  w-[48%]">
-              <input type="checkbox" />
-              <label htmlFor="">Remember me</label>
-                
-            </div>
-              
-            <h6 className="font-semibold text-blue-700">Forgot password</h6>
-          </div>
-
-          <button
-           
-            type="submit"
-            onClick={handlesubmit}
-            className=" w-8/10 block m-auto bg-blue-500 rounded-m mt-5 h-8 rounded-md"
+            onChange={handleForm}
+            className="w-full px-3 py-2 border rounded-md mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <span
+            className="absolute top-3 right-3 text-gray-500 cursor-pointer"
+            onClick={handleHide}
           >
-            {" "}
-            Login
-          </button>
-          <div className="flex mt-5 w-[80%]   ">
-          <h6 onClick={props.x}  className="ml-9">Not have any account?</h6>
-          <h6 onClick={props.x} className="ml-1 text-red-700">signup</h6>
+            {hide ? <FaRegEye /> : <FaRegEyeSlash />}
+          </span>
+        </div>
 
+        <div className="flex justify-between items-center mt-4 text-sm">
+          <label className="flex items-center space-x-2">
+            <input type="checkbox" className="form-checkbox" />
+            <span>Remember me</span>
+          </label>
+          <span className="text-blue-500 cursor-pointer">Forgot password?</span>
+        </div>
 
-          </div>
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-blue-500 text-white py-2 rounded-md mt-4 hover:bg-blue-600 transition"
+        >
+          Login
+        </button>
 
-          
-
+        <div className="text-center mt-4 text-sm">
+          <span>Not have an account? </span>
+          <span className="text-red-500 cursor-pointer" onClick={props.x}>Sign Up</span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
-
-
 
 export default Login;

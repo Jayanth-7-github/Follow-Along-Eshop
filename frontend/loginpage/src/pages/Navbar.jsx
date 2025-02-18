@@ -1,13 +1,29 @@
 import React from "react";
-import {Link} from "react-router-dom"
-function Navbar(){
-     return(
-        <ul className="flex justify-between ml-10 mr-10">
-            <li className="border-4 border-double font-bold  w-[12%] bg-blue-500 text-white hover:bg-green-600   "><Link to="/">Home</Link></li>
-            <li className="border-4 border-double font-bold  w-[12%] bg-blue-500 text-white hover:bg-green-600   "><Link to="/login">Login</Link></li>
+import { Link } from "react-router-dom";
 
-        </ul>
-     )
+function Navbar() {
+  return (
+    <nav className="p-4 shadow-lg">
+      <ul className="flex justify-between px-10">
+        <li className="text-lg font-semibold">
+          <Link
+            to="/"
+            className="px-6 py-2 bg-gray-100 rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 duration-300"
+          >
+            Home
+          </Link>
+        </li>
+        <li className="text-lg font-semibold">
+          <Link
+            to="/login"
+            className="px-6 py-2 bg-gray-100 rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 duration-300"
+          >
+            Login
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -1,158 +1,92 @@
-import React from "react";
-import { FaRegEye } from "react-icons/fa6";
-import { FaRegEyeSlash } from "react-icons/fa6";
-import { useState } from "react";
+import React, { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 
-
 function Signup(props) {
-  let [hide, sethide] = useState(true);
-  let [hided, sethided] = useState(true);
-  let [err, seterr] = useState("");
+  const [hide, setHide] = useState(true);
+  const [hided, setHided] = useState(true);
+  const [err, setErr] = useState("");
+  const [data, setData] = useState({ name: "", email: "", password: "", confirmpass: "" });
 
-  const handlehide = () => {
-    sethide(!hide);
-  };
-  const handlehided = () => {
-    sethided(!hided);
-  };
+  const toggleHide = () => setHide(!hide);
+  const toggleHided = () => setHided(!hided);
+  const handleInputChange = (e) => setData({ ...data, [e.target.name]: e.target.value });
 
-  const [data,setData]=useState({
-    name:"",
-    email:"",
-    password:"",
-    confirmpass:""
-  })
-   
-  
-
-  const handleform = (e) => {
-    setData({...data,[e.target.name]:e.target.value})
-    console.log(data);
-  }
-
-
-   const handlesubmit = async()=>{
-    
-    const {name,email,password,confirmpass} =data
-    if(password!==confirmpass){
-      seterr("Passwords do not match")
-      return
+  const handleSubmit = async () => {
+    const { name, email, password, confirmpass } = data;
+    if (!name || !email || !password || !confirmpass) {
+      setErr("Please fill all fields");
+      return;
     }
-    if(!name || !email || !password || !confirmpass){ 
-      seterr("Please fill all fields")
-      return
+    if (password !== confirmpass) {
+      setErr("Passwords do not match");
+      return;
     }
-
-
     try {
-      console.log("hhhh")
-      await axios.post("http://localhost:1111/user/signup",{
-        name,email,password
-      })
-      console.log("successfully registered")
+      await axios.post("http://localhost:1111/user/signup", { name, email, password });
+      console.log("Successfully registered");
     } catch (error) {
-      console.log(error)
-      seterr(error.message)
+      setErr(error.message);
     }
+  };
 
-   }
   return (
-    <>
-      <div className="border-2 w-[500px] mt-10 ml-15">
-        <h1 className="text-3xl font-bold text-center">Create an Account</h1>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-center text-gray-800">Create an Account</h1>
+      <div className="mt-6">
+        <label className="block text-gray-700">Name</label>
+        <input 
+          type="text" name="name" 
+          className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          onChange={handleInputChange} 
+        />
 
-        <div className="w-7/10 h-120 m-auto mt-10 mb-10 shadow-lg">
-          <label htmlFor="" className="block ml-10 mt-10">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            className="border-1 w-8/10 block m-auto h-8 rounded-md"
-            onChange={handleform}
+        <label className="block mt-4 text-gray-700">Email Address</label>
+        <input 
+          type="email" name="email"
+          className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          onChange={handleInputChange} 
+        />
+
+        <label className="block mt-4 text-gray-700">Password</label>
+        <div className="relative">
+          <input 
+            type={hide ? "password" : "text"} name="password"
+            className="w-full px-4 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={handleInputChange} 
           />
-          <label htmlFor="" className="block ml-10 mt-10">
-            Email address
-          </label>
-          <input
-          name="email"
-            type="text"
-            className="border-1 w-8/10 block m-auto h-8 rounded-md"
-            onChange={handleform}
+          <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer" onClick={toggleHide}>
+            {hide ? <FaRegEye /> : <FaRegEyeSlash />}
+          </span>
+        </div>
+
+        <label className="block mt-4 text-gray-700">Confirm Password</label>
+        <div className="relative">
+          <input 
+            type={hided ? "password" : "text"} name="confirmpass"
+            className="w-full px-4 py-2 pr-10 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onChange={handleInputChange} 
           />
-          <label htmlFor="" className="block ml-10 mt-5 ">
-            Password
-          </label>
-          <div className="flex  w-8/10 m-auto">
-            <input
-            name="password"
-              type={hide ? "password" : "text"}
-              className="border-1 w-[140%] block m-auto h-8 rounded-md rounded-bl-md"
-              onChange={handleform}
-            />
-
-            {hide ? (
-              <FaRegEye
-                className=" w-[12%] h-5 mt-1 ml-1"
-                onClick={handlehide}
-              />
-            ) : (
-              <FaRegEyeSlash
-                className="w-[12%] h-5 mt-1 ml-1"
-                onClick={handlehide}
-              />
-            )}
-          </div>
-
-          <label htmlFor="" className="block ml-10 mt-5 ">
-            Confirm Password
-          </label>
-          <div className="flex  w-8/10 m-auto">
-            <input
-            name="confirmpass"
-              type={hided ? "password" : "text"}
-              className="border-1 w-[140%] block m-auto h-8 rounded-md rounded-bl-md"
-              onChange={handleform}
-            />
-
-            {hided ? (
-              <FaRegEye
-                className="w-[12%] h-5 mt-1 ml-1"
-                onClick={handlehided}
-              />
-            ) : (
-              <FaRegEyeSlash
-                className="w-[12%] h-5 mt-1 ml-1"
-                onClick={handlehided}
-              />
-            )}
-          </div>
-
-          <div className="flex m-auto mt-5  w-[80%]  justify-between ">
-            <div className="flex  w-[48%]">
-              <input type="checkbox" />
-              <label htmlFor="">Remember me</label>
-              <p className="text-red-400 ">{err}</p>
-            </div>
-
-            {/* <h6 className="font-semibold text-blue-700">Forgot password</h6> */}
-          </div>
-
-          <button
-            onClick={handlesubmit}
-            type="submit"
-            className=" w-8/10 block m-auto bg-blue-500 rounded-m mt-5 h-8 rounded-md"
-          >
-            Signup
-          </button>
-
-          <h6 onClick={props.x} className="ml-9">
-            Already have an account
-          </h6>
+          <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer" onClick={toggleHided}>
+            {hided ? <FaRegEye /> : <FaRegEyeSlash />}
+          </span>
         </div>
       </div>
-    </>
+
+      {err && <p className="mt-4 text-red-500 text-sm text-center">{err}</p>}
+
+      <button 
+        className="w-full mt-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition"
+        onClick={handleSubmit}
+      >
+        Signup
+      </button>
+      
+      <p className="mt-4 text-sm text-center text-gray-600">
+        Already have an account? <span className="text-blue-500 cursor-pointer" onClick={props.x}>Login</span>
+      </p>
+    </div>
   );
 }
+
 export default Signup;

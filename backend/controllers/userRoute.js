@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/mail");
 let userRoute = express.Router();
 const upload = require("../middelware/multer");
+require("dotenv").config()
+
+const port=process.env.PORT
 
 
 
@@ -107,9 +110,8 @@ userRoute.get(
       let id = decoded.id;
       await UserModel.findByIdAndUpdate(id, { isActivated: true });
 
-      res
-        .status(200)
-        .json({ status: true, message: "activation is completed" });
+      res.redirect(`http://localhost:5173/login`)
+    
     });
   })
 );
@@ -148,16 +150,13 @@ userRoute.post(
     if (!user) {
       next(new Errorhadler("pls signup", 400));
     }
-    console.log(user,"****")
-
-
-
+   
     if(!user.isActivated){
       next(new Errorhadler("pls signup", 400));
     }
     let isMatching = await bcrypt.compare(password, user.password);
   
-    console.log(isMatching,"****")
+    
     if (!isMatching) {
       next(new Errorhadler("passwordword is incorrect", 400));
     }
@@ -171,7 +170,7 @@ userRoute.post(
       maxAge: 5 * 24 * 60 * 60 * 1000, 
     });
     
-    res.status(200).json({status:true,message:"login successful"})
+    res.status(200).json({status:true,message:"login successful",user:{name:user.name,id:user._id}})
   })
 );
 

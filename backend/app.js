@@ -2,12 +2,12 @@ const express = require("express");
 const cors=require ("cors")
 const app = express();
 app.use(express.json());
-
+const ErrorMiddleware = require("./middelware/error")
 
 
 
 app.use(cors({
-  origin: "http://localhost:5174",
+  origin: "*",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
 
@@ -35,6 +35,6 @@ app.use("/user",userRoute)
 //   res.status(200).send({msg:"Successful"})
 //   }
 // }))
-// app.use(Errorhandle)
+app.use(ErrorMiddleware)
 
 module.exports = { app };
