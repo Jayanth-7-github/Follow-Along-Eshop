@@ -30,7 +30,7 @@ Responsive UI Designed for smooth customer experience with varying screen sizes.
 - **CSS** - Styling for the form and layout
 - **React Icons** - Icons for email and password fields
 
-## Milestone 3: Backend Setup
+# Milestone 3: Backend Setup
 
 ## Overview
 
@@ -74,7 +74,7 @@ MongoDB Atlas & Mongoose – Database management
 dotenv – Manage environment variables
 Cors & Body-Parser – Middleware for API requests
 
-## Milestone 4: User Model, Controller & File Uploads
+# Milestone 4: User Model, Controller & File Uploads
 
 # Overview
 
@@ -91,7 +91,7 @@ Multer Setup – Enables image/file uploads for user profiles and products.
    role (Admin/User distinction).
    profileImage field to store uploaded images.
 
-### Milestone 5: Building the Sign-Up Page & Implementing Form Validation
+# Milestone 5: Building the Sign-Up Page & Implementing Form Validation
 
 # Overview
 
