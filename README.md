@@ -113,3 +113,107 @@ In this milestone, we focused on creating a Sign-Up Page where users can registe
 React.js – Frontend Framework
 HTML & CSS – Form Structure & Styling
 JavaScript (ES6) – Form Validation Logic
+
+
+
+# Milestone 6 - Secure User Signup & Password Encryption
+
+ Milestone 6: Backend Signup Endpoint & Secure Password Storage
+
+ Overview
+In Milestone 5, we built the Signup Page in the frontend.
+Now, in Milestone 6, we are implementing a backend endpoint for signup that:
+ Accepts user registration requests
+ Encrypts passwords before storing them
+ Saves user data securely in the MongoDB database
+
+This ensures that user credentials are protected from attacks like data breaches & password leaks.
+
+ Key Achievements
+ 1. Created a Secure Signup API Endpoint (/api/auth/signup)
+Users can now register securely with:
+Name
+Email
+Encrypted Password
+User Role (Default: User)
+API validates user input before saving.
+ 2. Used bcryptjs for Password Encryption
+Before storing passwords, we encrypt them using bcrypt hashing.
+This prevents plain-text passwords from being saved in the database.
+ 3. Stored User Data in MongoDB (Mongoose Schema)
+Created a User Model to store user details in MongoDB Atlas.
+ 4. Tested Signup API Using Postman
+Successfully registered users via Postman API testing.
+ Technologies Used
+Node.js & Express.js – Backend Framework
+MongoDB Atlas & Mongoose – Database Management
+bcryptjs – Password Encryption
+dotenv – Securely manage environment variables
+Postman – API Testing
+
+
+# Milestone 7: Backend Endpoint for User Login
+Welcome to Milestone 7! In this milestone, you’ll create a backend endpoint for user login, focusing on validating user credentials and verifying encrypted passwords stored in the database. Let’s break it down step by step.
+
+Learning Goals 
+By the end of this milestone, you will:
+
+Understand how to validate user credentials during login.
+
+Learn how to compare the encrypted password with the user’s input.
+
+Why Encrypt Passwords?
+Protect User Data: Keeps passwords safe even if the database is compromised.
+
+Privacy: Ensures passwords aren’t stored in plain text.
+
+Compliance: Meets security standards like GDPR and PCI-DSS.
+
+Prevents Password Theft: Hashed passwords are difficult to decipher, increasing security.
+
+How Login Authentication Works 
+User Enters Credentials:
+
+The user provides their email/username and password on the login page.
+
+Fetch User Data from Database:
+
+The backend retrieves the user record based on the provided email/username.
+
+If the user is not found, return an error: "User does not exist."
+
+Compare Encrypted Passwords:
+
+Process the user's input password using the same hashing algorithm (e.g., bcrypt).
+
+Compare the resulting hash to the stored hashed password.
+
+If they match, the user is authenticated; if not, send an error.
+
+# Milestone 8: Creating and Displaying Card Components
+Welcome to Milestone 8!  In this milestone, you’ll learn how to create a card component and display multiple cards on the products page. This will help you showcase products effectively and improve the user experience of your e-commerce app.
+
+Learning Goals 
+By the end of this milestone, you will:
+
+Learn how to create a card component.
+
+Learn how to display those cards on the products page.
+
+Why Create Card Components?
+Showcase Products Effectively: Presents product details in a clear and visually appealing way.
+
+Reusable Design: Can be used across multiple pages or sections of the app.
+
+Improved User Experience: Makes it easy for users to browse and interact with products.
+
+Organized Layout: Keeps the homepage clean and structured.
+
+How to Display a Single Card for Multiple Products?
+Create a Dynamic Component: Design a single card component that accepts product details as props.
+
+Use Mapping: Use array mapping to iterate over the product list and render a card for each product.
+
+Pass Data Dynamically: Pass unique product information (e.g., name, price, image) to each card.
+
+Maintain Consistency: Ensure the layout remains uniform for all products.
