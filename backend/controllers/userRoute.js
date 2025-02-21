@@ -110,7 +110,7 @@ userRoute.get(
       let id = decoded.id;
       await UserModel.findByIdAndUpdate(id, { isActivated: true });
 
-      res.redirect(`http://localhost:5173/login`)
+      res.redirect(`http://localhost:5174/login`)
     
     });
   })

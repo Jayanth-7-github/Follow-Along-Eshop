@@ -23,7 +23,7 @@ function Signup(props) {
       return;
     }
     try {
-      await axios.post("http://localhost:1111/user/signup", { name, email, password });
+      await axios.post("http://localhost:0100/user/signup", { name, email, password });
       console.log("Successfully registered");
     } catch (error) {
       setErr(error.message);
