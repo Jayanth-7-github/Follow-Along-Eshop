@@ -1,9 +1,9 @@
 let express=require("express")
-const ProductModel  = require("../model/productModel");
+const {ProductModel}  = require("../model/productModel");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const Errorhadler=require("../utils/errorhadler")
 const productRouter= express.Router()
-const UserModel = require("../model/userModel")
+const {UserModel} = require("../model/userModel")
 const mongoose = require("mongoose");
 const {productUpload}=require("../middleware/multer")
 
