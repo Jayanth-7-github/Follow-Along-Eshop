@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
+import axios from "axios";
 
 function CreateProduct() {
   const [formData, setFormData] = useState({
@@ -32,26 +33,43 @@ function CreateProduct() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { email, name, description, category, tag, price, stock, images, previewImg } = formData;
 
-    console.log(
-      {
-        email,
-        name,
-        description,
-        category,
-        tag,
-        price,
-        stock,
-        images,
-        previewImg,
-      },
-      'form data'
-    );
+    const multiPartFormData =new FormData();
+    multiPartFormData.append("name", name);
+    multiPartFormData.append("discription", discription);
+    multiPartFormData.append("category", category);
+    multiPartFormData.append("tag", tag);
+    multiPartFormData.append("price", price);
+    multiPartFormData.append("stock", stock);
+    multiPartFormData.append("email", email);
+
+    if(Array.isArray(images)){
+      images.forEach((image, index) => {
+        multiPartFormData.append("images",image);
+      });
+    }
+
+
+    try {
+      const response = await axios.post("http://localhost:1111/user/createproduct",formData,{
+        headers: { 'Content-Type':'multipart/form-data' },
+        withCredentials: true,
+      });
+      if(response.status===200) {
+        alert("Product created successfully")
+        setFormData({})
+      }
+    } catch (error) {
+      console.log("Error creating product:",error);
+      alert("Failed to create product . please check the data and try again.")
+    }
   };
+    
+  
 
   const categoryArr = ['electronics', 'electronics1', 'electronics3', 'electronics5'];
 
@@ -191,5 +209,4 @@ function CreateProduct() {
     </div>
   );
 }
-
 export default CreateProduct;

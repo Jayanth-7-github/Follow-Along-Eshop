@@ -1,6 +1,6 @@
 let mongoose = require("mongoose")
 
-const addressSchema=mongoose.Schema({
+const addressSchema=new mongoose.Schema({
     country:{
         type:String,
         require:true
@@ -25,14 +25,17 @@ const addressSchema=mongoose.Schema({
 })
 
 
-const userSchema =mongoose.Schema({
+const userSchema =new mongoose.Schema({
     name:{
         type:String,
         require:true
     },
     email:{
         type:String,
-        require:true
+        require:true,
+        unique:true,
+        match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/,"please add a valid email address"]
+    
     },
     password:{
         type:String,
