@@ -217,3 +217,33 @@ Use Mapping: Use array mapping to iterate over the product list and render a car
 Pass Data Dynamically: Pass unique product information (e.g., name, price, image) to each card.
 
 Maintain Consistency: Ensure the layout remains uniform for all products.
+
+
+## milestone-9
+
+###  Overview
+In this milestone, we created a **product input form** that allows users to enter product details and upload multiple images. The form ensures **data validation** and previews images before submission.
+
+###  Features
+ User-friendly **product input form**  
+ **Multiple image uploads** with previews 
+  **Real-time validation** for form fields  
+
+###  Screenshots
+![Product Form Screenshot](URL_TO_YOUR_IMAGE)
+
+###  Installation & Usage
+1. Clone the repository:  
+   ```bash
+   git clone YOUR_REPOSITORY_LINK
+   cd ecommerce-follow-along
+## milestone 10 :product schema & API end point
+
+In this part of Milestone 9, we will define the product schema using Mongoose and create a POST API endpoint to validate and save product details in MongoDB.
+
+ Learning Goals
+By the end of this milestone, you will:
+ Learn how to write a Mongoose schema for products
+Implement data validation to ensure only valid data is saved
+ Create a POST API endpoint to receive and store product data in MongoDB
+ Understand the importance of data integrity and validation
