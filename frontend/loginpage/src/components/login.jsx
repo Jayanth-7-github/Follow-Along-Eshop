@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const baseUrl="http://localhost:1100"
+// import baseUrl from "url"
+// {console.log(baseUrl)}
 
 function Login(props) {
   const navigate = useNavigate();
@@ -23,7 +26,7 @@ function Login(props) {
     }
 
     try {
-      const response = await axios.post("http://localhost:0100/user/login", { email, password });
+      const response = await axios.post(`${baseUrl}/user/login`, { email, password });
       console.log("Login successful", response.data);
       navigate("/");
     } catch (error) {

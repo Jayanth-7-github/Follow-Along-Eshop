@@ -1,0 +1,23 @@
+meta {
+  name: createProduct
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:0100/product/create
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  email: jayanthkollepara@gmail.com
+  name: jayanth
+  description: good
+  category: fashion
+  tags: [hhh,jhhh]
+  price: 200
+  stock: 4767
+  images: @file(C:\Users\K Jayanth\OneDrive\圖片\dark-thor-background-aav1c4k99whnn8zn.jpg)
+  images: @file(C:\Users\K Jayanth\OneDrive\圖片\coimbatore.jpg)
+}

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import axios from "axios";
+const baseUrl="http://localhost:1100"
+// import baseUrl from "url"
+// {console.log(baseUrl)}
 
 function Signup(props) {
   const [hide, setHide] = useState(true);
@@ -23,7 +26,7 @@ function Signup(props) {
       return;
     }
     try {
-      await axios.post("http://localhost:0100/user/signup", { name, email, password });
+      await axios.post(`${baseUrl}/user/signup`, { name, email, password });
       console.log("Successfully registered");
     } catch (error) {
       setErr(error.message);

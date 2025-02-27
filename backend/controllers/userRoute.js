@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { sendMail } = require("../utils/mail");
 let userRoute = express.Router();
-const upload = require("../middelware/multer");
+const {upload }= require("../middelware/multer");
 require("dotenv").config()
 
 const port=process.env.PORT

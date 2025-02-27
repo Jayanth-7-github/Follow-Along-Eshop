@@ -1,6 +1,9 @@
+const baseUrl="http://localhost:1100"
+
+
 export default function ProductCard({
   name,
-  image,
+  images,
   description,
   price,
   onAddToCart,
@@ -9,7 +12,7 @@ export default function ProductCard({
     <div className="bg-white p-5 rounded-2xl shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
       <div className="w-full relative">
         <img
-          src={image}
+          src={`${baseUrl}/products-photo/${images[0]}`}
           alt={name}
           className="w-full h-60 object-cover rounded-xl"
         />

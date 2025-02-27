@@ -22,19 +22,18 @@ const ProductSchema =new mongoose.Schema(
         type:Number,
         require:true
     },
-    image:{
+    images:{
         type:[String],
         require:true
     },
-    tag:{
-        type:String,
+    tags:{
+        type:[String],
         require:true
     },
     email:{
         type:String,
         require:true,
-        unique:true,
-        match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/,"please add a valid email address"]
+        // match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/,"please add a valid email address"]
     
     },
     

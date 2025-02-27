@@ -6,7 +6,8 @@ import Loginpage from "./pages/Loginpage"
 import Navbar from "./pages/Navbar";
 import Login from "./components/login";
 import Signup from "./components/signup";
-import CreatePoduct from "./pages/CreateProduct"
+import CreateProduct from "./components/CreateProduct";
+import SellerProductPage from "./pages/SellerProduct"
 
 function App() {
 
@@ -16,7 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/Login" element={<Loginpage />}></Route>
-        <Route path="/create" element={<CreatePoduct />}></Route>
+        <Route path="/create" element={<CreateProduct />}></Route>
+        <Route path="/modify" element={<SellerProductPage/>}></Route>
+        
       </Routes>
     </BrowserRouter>
   );
