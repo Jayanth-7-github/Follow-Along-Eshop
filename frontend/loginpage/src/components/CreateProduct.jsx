@@ -5,13 +5,16 @@ import { data, useLocation } from "react-router-dom";
 import { IoCloseCircleOutline } from "react-icons/io5";
 const baseUrl = "http://localhost:1100";
 
+
+
+
 function CreateProduct() {
 
     const location = useLocation();
     const productData =location.state || {}
     const { _id, email, name, description, category, tags, price, stock, images, edit } = productData
 
-    
+    console.log(images)
     
     let prevImg = []
     if (images) {
@@ -84,7 +87,7 @@ function CreateProduct() {
 
     const handleSubmit = async (e) => {
       
-        console.log("jjjj")
+        console.log("good  efewsfsffer")
         const { email, name, description, category, tags, price, stock, images } = formData;
 
         if (!email || !name || !description || !category || !price || !stock) {
