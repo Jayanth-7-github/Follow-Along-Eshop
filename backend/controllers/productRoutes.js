@@ -99,50 +99,68 @@ productRouter.put("/update/:id",productUpload.array("images",10),catchAsyncError
 
 
 
-productRouter.post("/cart",auth,catchAsyncError(async(req,res,next)=>{
-    const { productId, quantity  } = req.body;
-    let userId = req.user_id;
-    
-  
-    if (!userId) {
-      return next(new Errorhadler("UserID is required", 400));
-    }
-  
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
+productRouter.post('/cart',auth, catchAsyncError(async (req, res, next) => {
+  const {productId, quantity } = req.body;
+  let userId=req.user_id 
+  if (!userId) {
+      return next(new Errorhadler("UserID isrequired", 400));
+  }
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
       return next(new Errorhadler("Invalid productId", 400));
-    }
-  
-    if (!quantity || quantity < 1) {
+  }
+
+  if (!quantity || quantity < 1) {
       return next(new Errorhadler("Quantity must be at least 1", 400));
-    }
-  
-    const user = await UserModel.findById(userId);
-    if (!user) {
+  }
+  const user = await UserModel.findById(userId);
+  if (!user) {
       return next(new Errorhadler("User not found", 404));
-    }
-  
-    const product = await ProductModel.findById(productId);
-    if (!product) {
+  }
+  const product = await ProductModel.findById(productId);
+  if (!product) {
       return next(new Errorhadler("Product not found", 404));
-    }
-  
-    const cartItemIndex = user.cart.findIndex(
+  }
+  const cartItemIndex = user.cart.findIndex(
       (item) => item.productId.toString() === productId
-    );
-  
-    if (cartItemIndex > -1) {
+  );
+
+  if (cartItemIndex > -1) {
       user.cart[cartItemIndex].quantity += quantity;
-    } else {
+  } else {
       user.cart.push({ productId, quantity });
+  }
+
+  await user.save();
+
+  res.status(200).json({
+      status: true,
+      message: "Cart updated successfully",
+      cart: user.cart,
+  });
+}));
+
+
+
+
+
+
+productRouter.get("/cart",auth,catchAsyncError(async(req,res,next)=>{
+     
+    let userID=req.user_id
+    if(!userID){
+      return next(new Errorhadler("user id is required", 404));
+    }
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
+      return next(new Errorhadler("Invalid userId", 400));
     }
 
-    await user.save(); 
+    let cart=await UserModel.findById(userID).populate({
+       path:"cart.productId",
+       model:"Product"
+    })
+    
+    res.status(200).json({status:true,message:cart})
 
-    res.status(200).json({
-      success: true,
-      message: "Product added to cart successfully",
-      cart: user.cart,
-    });
 }))
 
 

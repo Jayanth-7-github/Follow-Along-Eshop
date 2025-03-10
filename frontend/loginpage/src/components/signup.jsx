@@ -26,10 +26,17 @@ function Signup(props) {
       return;
     }
     try {
-      await axios.post(`${baseUrl}/user/signup`, { name, email, password });
+      await axios
+        .post("http://localhost:8181/user/signup", {
+          name,
+          email,
+          password,
+        })
+        .then((response) => console.log(response.data));
       console.log("Successfully registered");
     } catch (error) {
-      setErr(error.message);
+      console.log(error);
+      setErr(resizeBy.data.message);
     }
   };
 

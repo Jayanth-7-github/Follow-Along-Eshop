@@ -8,9 +8,9 @@ const IndividualProduct = () => {
      
     let location =useLocation()
     let id=location.state.id
-     console.log(id,"iiii")
+     console.log(id)
     let [product,setProduct]=useState({})
-    
+
 
     useEffect(() => {
       const fetchData = async () => {
@@ -20,7 +20,6 @@ const IndividualProduct = () => {
               if (response.status === 200) {  
                   
                 setProduct(response.data.message);
-                console.log(response.data.message)
               }
           } catch (error) {
               console.error("Error fetching products:", error);
@@ -46,21 +45,27 @@ const IndividualProduct = () => {
         );
     };
 
-    const handleClick = async()=>{
+
+    const handleClick=async()=>{
+        
         try {
-            let respon=axios.post("http://localhost:8181/product/cart",{
+            let response=await axios.post("http://localhost:8181/product/cart",{
                 productId:id,
                 quantity:quantity
+            }, {
+                withCredentials: true   
             })
-            if(respon==200){
+    
+            if(response.status==200){
                 console.log("added to cart")
             }
-        } catch (error) {
+            
+        } catch (error){
             console.log(error)
         }
+        
 
-    }
-
+   }
 
     return (
        

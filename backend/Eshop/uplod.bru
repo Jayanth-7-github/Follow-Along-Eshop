@@ -5,11 +5,14 @@ meta {
 }
 
 post {
-  url: http://localhost:8689/user/upload
-  body: multipartForm
+  url: http://localhost:8689/user/login
+  body: json
   auth: none
 }
 
-body:multipart-form {
-  photo: @file(C:\Users\K Jayanth\OneDrive\圖片\coimbatore.jpg)
+body:json {
+  {
+    "email":"jayanthkollepara@gmail.com",
+    "password":123
+  }
 }

@@ -138,41 +138,46 @@ userRoute.post(
 
 
 
-userRoute.post(
-  "/login",
-  catchAsyncError(async (req, res, next) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      next(new Errorhadler("email and passwordword are reqires", 400));
+userRoute.post("/login",catchAsyncError(async (req, res, next) => {
+  const { email, password } = req.body;
+  console.log(email)
+  if (!email || !password) {
+    next(new Errorhadler("email and password are reqires", 400));
+  }
+
+  let user = await UserModel.findOne({ email });
+
+  if (!user) {
+    next(new Errorhadler("Please Signup", 400));
+  }
+
+  if(!user.isActivated){
+    next(new Errorhadler("Please Signup", 400));
+  }
+
+  await bcrypt.compare(password, user.password, function(err, result) {
+    if(err){
+      next(new Errorhadler("internal server error", 500));
     }
-    
-    let user =await UserModel.findOne({ email });
-    if (!user) {
-      next(new Errorhadler("pls signup", 400));
+    if(!result){
+      next(new Errorhadler("password is incorrect", 400));
     }
-   
-    if(!user.isActivated){
-      next(new Errorhadler("pls signup", 400));
-    }
-    let isMatching = await bcrypt.compare(password, user.password);
-  
-    
-    if (!isMatching) {
-      next(new Errorhadler("passwordword is incorrect", 400));
-    }
-     
 
     let token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: 5 * 60 * 60 * 60 * 1000,
+      expiresIn: 1000 * 60 * 60 * 60 *24,
     });
     res.cookie("accesstoken", token, {
       httpOnly: true,
-      maxAge: 5 * 60 * 60 * 60 * 1000, 
+      secure: false, 
+      sameSite: "lax"
     });
     
-    res.status(200).json({status:true,message:"login successful",user:{name:user.name,id:user._id}})
-  })
-);
+
+    res.status(200).json({status:true,message:"login successful",token})
+
+    
+  });
+}));
 
 
 

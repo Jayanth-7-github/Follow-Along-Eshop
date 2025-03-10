@@ -26,13 +26,26 @@ function Login(props) {
     }
 
     try {
-      const response = await axios.post(`${baseUrl}/user/login`, { email, password });
-      console.log("Login successful", response.data);
-      navigate("/");
+      await axios
+        .post("http://localhost:8181/user/login", {
+          email,
+          password,
+        }, {
+          withCredentials: true   
+        })
+        .then((response) => {
+          console.log(response,"888")
+          navigate("/");
+        });
+
+      console.log("Login successful");
+      
     } catch (error) {
-      setError(error.message);
+      console.log(error);
+      setError(error.response.data.message);
     }
   };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
