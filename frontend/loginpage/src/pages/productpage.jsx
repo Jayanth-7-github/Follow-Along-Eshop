@@ -1,7 +1,7 @@
 import ProductCard from "../components/Product";
 import { useEffect ,useState} from "react";
 import axios from "axios"
-const baseUrl = "http://localhost:1100";
+import { useNavigate} from "react-router-dom";
 
 
 
@@ -10,12 +10,15 @@ const baseUrl = "http://localhost:1100";
 export default function ProductPage() {
    
     let [data,setData]=useState([])
+   
+
+    const navigate = useNavigate()
     
     useEffect(() => {
       const fetchData = async () => {
           try {
-              let response = await axios.get(`${baseUrl}/product/allproduct`);
-              console.log(response)
+              let response = await axios.get("http://localhost:8181/product/allproduct");
+              
               if (response.status === 200) {  
                  
                   setData(response.data.message);
@@ -28,15 +31,20 @@ export default function ProductPage() {
       fetchData();  
   }, []);
 
+  const addtocart=(id)=>{
+    console.log("hbhb")
+     navigate("/cart",{state:{id}})
+
+  }
+
 
     return (
       <div className="w-full min-h-screen bg-neutral-800">
         <div className="grid grid-cols-5 gap-4 p-4">
           {data.map((product, index) => (
-            <ProductCard key={index} {...product} />
+            <ProductCard key={index} {...product} toCart={()=>addtocart(product._id)} />
           ))}
         </div>
       </div>
     );
   }
-  

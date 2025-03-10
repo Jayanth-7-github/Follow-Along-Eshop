@@ -110,7 +110,7 @@ userRoute.get(
       let id = decoded.id;
       await UserModel.findByIdAndUpdate(id, { isActivated: true });
 
-      res.redirect(`http://localhost:5174/login`)
+      res.redirect(`http://localhost:5173/login`)
     
     });
   })
@@ -163,11 +163,11 @@ userRoute.post(
      
 
     let token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: 60 * 60 * 60 * 24 * 30,
+      expiresIn: 5 * 60 * 60 * 60 * 1000,
     });
     res.cookie("accesstoken", token, {
       httpOnly: true,
-      maxAge: 5 * 24 * 60 * 60 * 1000, 
+      maxAge: 5 * 60 * 60 * 60 * 1000, 
     });
     
     res.status(200).json({status:true,message:"login successful",user:{name:user.name,id:user._id}})

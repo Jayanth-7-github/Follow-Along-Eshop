@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const baseUrl="http://localhost:1100"
+const baseUrl="http://localhost:8181"
 // import baseUrl from "url"
 // {console.log(baseUrl)}
 

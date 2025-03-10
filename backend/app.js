@@ -4,7 +4,9 @@ const app = express();
 app.use(express.json());
 const ErrorMiddleware = require("./middelware/error")
 const path = require('path');
+const cookieparser=require("cookie-parser")
 
+app.use(cookieparser())
 
 
 app.use(cors({
@@ -16,10 +18,10 @@ app.use(cors({
 )
 
 const {userRoute} = require("./controllers/userRoute")
-const {productRoute}=require("./controllers/productRoutes")
+const {productRouter}=require("./controllers/productRoutes")
 
 app.get("/test", async (req, res) => {
-  res.send("hello.....");
+  res.send("hello user, welcome to ecommerce");
 });
 
 
@@ -27,7 +29,7 @@ app.use('/profile-photo', express.static(path.join(__dirname, 'uploads')));
 app.use('/products-photo', express.static(path.join(__dirname, 'uploadproducts')));
 
 app.use("/user",userRoute)
-app.use("/product",productRoute)
+app.use("/product",productRouter)
 
 
 

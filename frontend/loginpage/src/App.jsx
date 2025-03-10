@@ -8,6 +8,7 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import CreateProduct from "./components/CreateProduct";
 import SellerProductPage from "./pages/SellerProduct"
+import IndividualProduct from "./pages/IndividualProduct";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/Login" element={<Loginpage />}></Route>
         <Route path="/create" element={<CreateProduct />}></Route>
         <Route path="/modify" element={<SellerProductPage/>}></Route>
+        <Route path="/cart" element={<IndividualProduct />}></Route>
         
       </Routes>
     </BrowserRouter>

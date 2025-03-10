@@ -3,23 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { data, useLocation } from "react-router-dom";
 import { IoCloseCircleOutline } from "react-icons/io5";
-const baseUrl = "http://localhost:1100";
-
-
-
-
 function CreateProduct() {
 
     const location = useLocation();
     const productData =location.state || {}
+    
     const { _id, email, name, description, category, tags, price, stock, images, edit } = productData
 
-    console.log(images)
+ 
     
     let prevImg = []
     if (images) {
         images.forEach((ele, ind) => (
-            prevImg.push(`${baseUrl}/products-photo/${ele}`)
+            prevImg.push(`http://localhost:8181/products-photo/${ele}`)
         ))
     }
   
@@ -37,18 +33,17 @@ function CreateProduct() {
 
     useEffect(()=>{
         setFormData({
-            ...formData,
-            email,
-            name,
-            description,
-            category,
-            tags,
-            price,
-            stock,
-            images,
-            previewImg:prevImg
-        })
-    },[productData])
+            email: email || "",
+            name: name || "",
+            description: description || "",
+            category: category || "",
+            tags: tags || [],
+            price: price || "",
+            stock: stock || "",
+            images: images || [],
+            previewImg: prevImg || []
+        });
+    }, [email, name, description, category, tags, price, stock, images]);
    
 
     const handleDeletePrevImg =(index)=>{
@@ -86,8 +81,8 @@ function CreateProduct() {
     };
 
     const handleSubmit = async (e) => {
-      
-        console.log("good  efewsfsffer")
+        e.preventDefault()
+        console.log("jjjj")
         const { email, name, description, category, tags, price, stock, images } = formData;
 
         if (!email || !name || !description || !category || !price || !stock) {
@@ -98,7 +93,7 @@ function CreateProduct() {
         console.log({
             email, name, description, category, tags, price, stock, images
         }, "form data");
-
+        
         const multiPartFormData = new FormData;
         multiPartFormData.append("name", name);
         multiPartFormData.append("description", description);
@@ -115,16 +110,17 @@ function CreateProduct() {
         }
 
         try {
-            const response = await axios.post(`${baseUrl}/product/createProduct`, multiPartFormData, {
+            const response = await axios.post("http://localhost:8181/product/create-product", multiPartFormData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
-                },
-            })
-
+                }
+            });
+            
             if (response.status === 201) {
                 console.log(response)
-                alert("Product Created Successfully");
                 setFormData({});
+                alert("Product Created Successfully");
+                
             }
         }
 
@@ -136,9 +132,29 @@ function CreateProduct() {
     };
 
 
-    const handleEdit = (e) => {
-      
-        console.log(formData)
+    const handleEdit = async(e) => {
+        e.preventDefault()
+        const { email, name, description, category, tags, price, stock, images } = formData;
+        const multiPartFormData = new FormData;
+        multiPartFormData.append("name", name);
+        multiPartFormData.append("description", description);
+        multiPartFormData.append("category", category);
+        multiPartFormData.append("tags", tags);
+        multiPartFormData.append("price", price);
+        multiPartFormData.append("stock", stock);
+        multiPartFormData.append("email", email);
+        if (Array.isArray(images)) {
+            images.forEach(image => {
+                multiPartFormData.append("images", image)
+            });
+        }
+        try {
+            const response =await axios.put(`http://localhost:8181/product/update/${_id},multiPartFormData`)
+            console.log(response)
+        } catch (error) {
+            console.log(error) 
+        }
+       
     }
 
 
@@ -170,7 +186,7 @@ function CreateProduct() {
                     <div>
                         <label className='block font-medium text-gray-700'>Category</label>
                         <select className='border p-2 w-full rounded-md focus:ring-2 focus:ring-blue-500' name="category" onChange={handleChange} required>
-                            <option value="">{formData.category ? formData.category : "Choose a category"}</option>
+                            <option value="">Choose a category</option>
                             {categoryArr.map((ele, index) => (
                                 <option key={index} value={ele}>{ele}</option>
                             ))}
@@ -203,7 +219,7 @@ function CreateProduct() {
                     </div>
 
                     <div className='flex flex-wrap gap-2 mt-2'>
-                        {formData.previewImg.map((img, index) => (
+                        {formData.previewImg&&formData.previewImg.map((img, index) => (
                           <div key={index}> 
                             <IoCloseCircleOutline onClick={()=>handleDeletePrevImg(index)} className='relative left-15 ' />
                             <img key={index} src={img} alt={`Preview ${index}`} className='w-20 h-20 object-cover rounded-md shadow-md' />
@@ -211,7 +227,7 @@ function CreateProduct() {
                             
                         ))}
                     </div>
-
+                   
                     {edit ? <button onClick={handleEdit} className='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'>
                         edit
                     </button> : <button  onClick={handleSubmit} className='w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition'>

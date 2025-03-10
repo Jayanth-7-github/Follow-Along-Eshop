@@ -2,22 +2,24 @@ let express=require("express")
 const ProductModel  = require("../model/productModel");
 const catchAsyncError = require("../middelware/catchAsyncError");
 const Errorhadler=require("../utils/errorhadler")
-const productRoute= express.Router()
+const productRouter= express.Router()
 const {UserModel} = require("../model/userModel")
 const mongoose = require("mongoose");
 const {productUpload}=require("../middelware/multer")
 const path = require('path');  
+const auth=require("../middelware/auth")
 
-
-productRoute.post("/create-product",productUpload.array("images",10), catchAsyncError(async(req, res, next)=>{
+productRouter.post("/create-product",productUpload.array("images",10), catchAsyncError(async(req, res, next)=>{
     const { email,name, description,category,tags,price,stock} = req.body;
-    const images =req.files.map((file)=>file.path);
+
+    const images =req.files.map((file)=>path.basename(file.path));
     console.log(email,name, description,category,tags,price,images);
 
     if (!email ||!name ||!description ||!category ||!tags ||!price ||!images ||!stock) {
        return  next(new Errorhadler("All fields are required",400))
     }
     let user=await UserModel.findOne({email})
+    console.log(email)
     if(!user){
         return next(new Errorhadler("user is not exist",404))
     }
@@ -31,22 +33,116 @@ productRoute.post("/create-product",productUpload.array("images",10), catchAsync
 }))
 
 
-productRoute.get("/allproduct", catchAsyncError(async(req, res, next)=>{
+productRouter.get("/allproduct", catchAsyncError(async(req, res, next)=>{
       
-     let allProduct = await ProductModel.find()
+    let allProduct = await ProductModel.find()
+    res.status(200).json({status:true,message:allProduct})
+}))
 
-     if (allProduct && allProduct.length > 0) { 
-        allProduct = allProduct.map((product) => {
-            if (product.images && product.images.length > 0) {
-                product.images = product.images.map((ele) => path.basename(ele));
-            }
-            return product; 
-        });
+
+productRouter.get("/individualproduct/:id", catchAsyncError(async(req, res, next)=>{
+    
+    let id=req.params.id
+    let Product = await ProductModel.findById(id)
+    res.status(200).json({status:true,message:Product})
+}))
+
+
+
+
+
+
+productRouter.delete("/delete/:id",catchAsyncError(async(req,res,next)=>{
+   console.log("kjmk")
+      let id=req.params.id
+      if(!id){
+        return next(new Errorhadler("id is not passed",400))
+      }
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+       return next(new Errorhadler("Invalid ObjectId", 400));
+      }
+      const deletedProduct = await ProductModel.findByIdAndDelete(id);
+      if (!deletedProduct) {
+          return next(new Errorhadler("Product not found", 404));
+      }
+      res.status(200).json({status:true,message:"deleted successfully"})
+      
+}))
+
+
+
+productRouter.put("/update/:id",productUpload.array("images",10),catchAsyncError(async(req,res,next)=>{
+   
+   let id=req.params.id
+   if(!id){
+     return next(new Errorhadler("id is not passed",400))
+   }
+   if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next(new Errorhadler("Invalid ObjectId", 400));
+   }
+   
+   let { email,name, description,category,tags,price,stock,images} = req.body;
+   const imagesArr =req.files.map((file)=>path.basename(file.path));
+   console.log(images,imagesArr)
+   if(!images){
+       images=[]
+   }
+   else{
+       images =Array.isArray(images)?images:[images]
+   }
+   console.log(images,imagesArr,"88")
+   const updated =await ProductModel.findByIdAndUpdate(id,{ email,name, description,category,tags,price,stock,images:[...imagesArr,...images]},{new:true})
+   res.status(200).json({status:true,message:"updated successfully",data:updated})
+   
+}))
+
+
+
+
+productRouter.post("/cart",auth,catchAsyncError(async(req,res,next)=>{
+    const { productId, quantity  } = req.body;
+    let userId = req.user_id;
+    
+  
+    if (!userId) {
+      return next(new Errorhadler("UserID is required", 400));
     }
-      
-     res.status(200).json({status:true,message:allProduct})
+  
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return next(new Errorhadler("Invalid productId", 400));
+    }
+  
+    if (!quantity || quantity < 1) {
+      return next(new Errorhadler("Quantity must be at least 1", 400));
+    }
+  
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return next(new Errorhadler("User not found", 404));
+    }
+  
+    const product = await ProductModel.findById(productId);
+    if (!product) {
+      return next(new Errorhadler("Product not found", 404));
+    }
+  
+    const cartItemIndex = user.cart.findIndex(
+      (item) => item.productId.toString() === productId
+    );
+  
+    if (cartItemIndex > -1) {
+      user.cart[cartItemIndex].quantity += quantity;
+    } else {
+      user.cart.push({ productId, quantity });
+    }
 
+    await user.save(); 
 
+    res.status(200).json({
+      success: true,
+      message: "Product added to cart successfully",
+      cart: user.cart,
+    });
 }))
 
 
@@ -58,4 +154,5 @@ productRoute.get("/allproduct", catchAsyncError(async(req, res, next)=>{
 
 
 
-module.exports ={productRoute};
+
+module.exports ={productRouter};

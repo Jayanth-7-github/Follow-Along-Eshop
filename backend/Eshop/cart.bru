@@ -1,0 +1,19 @@
+meta {
+  name: cart
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8181/product/cart
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "userId":"67b4558be4e92eb5e9612733",
+    "productId":"67c9802d4705c865d7b958a5",
+    "quantity":4
+  }
+}

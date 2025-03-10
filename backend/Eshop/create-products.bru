@@ -1,0 +1,22 @@
+meta {
+  name: create-products
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:6996/product/create-product
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  email: jayanthkollepara@gmail.com
+  name: jayanth
+  description: dskjf
+  category: electronic
+  tags: sfs,fe
+  price: 532
+  stock: 32
+  images: @file(C:\Users\K Jayanth\OneDrive\圖片\Screenshots\Screenshot 2025-02-25 101111.png)
+}
