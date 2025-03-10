@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 import { data, useLocation } from "react-router-dom";
 import { IoCloseCircleOutline } from "react-icons/io5";
+
+
+
 function CreateProduct() {
 
     const location = useLocation();

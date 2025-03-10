@@ -69,8 +69,7 @@ userRoute.post(
       let token = jwt.sign({ id: newUser._id }, process.env.SECRET, {
         expiresIn: 60 * 60 * 60 * 5,
       });
-      let PORT = process.env.PORT;
-      let activation_url = `http://localhost:${PORT}/user/activation/${token}`;
+      let activation_url = `http://localhost:${port}/user/activation/${token}`;
       try {
         await sendMail({
           email: newUser.email,
@@ -110,7 +109,7 @@ userRoute.get(
       let id = decoded.id;
       await UserModel.findByIdAndUpdate(id, { isActivated: true });
 
-      res.redirect(`http://localhost:5173/login`)
+      res.redirect(`http://localhost:5174/login` || `http://localhost:5173/login` || `http://localhost:5175/login`)
     
     });
   })
