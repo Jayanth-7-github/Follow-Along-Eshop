@@ -636,3 +636,34 @@ Address Type (Home/Work)
  Stores user input in React state
 Navigates to the form when clicking "Add Address" in the profile page
  On form submission, logs the data (to be sent to the backend later)
+
+
+
+ 
+# Milestone 23 - Place Order Functionality
+
+## Overview
+In this milestone, we implemented the **Place Order** functionality by adding a button in the cart page, creating a Select Address page, and setting up a backend endpoint to fetch user addresses.
+
+## Features Implemented
+###  Frontend:
+- Added a **"Place Order"** button in the cart page that navigates to the **Select Address** page.
+- Created a **Select Address** page where users can view and select a delivery address.
+
+###  Backend:
+- Implemented a new API endpoint to retrieve the list of saved addresses for a user.
+- Created a **Mongoose Schema** for storing order details.
+
+
+# Milestone 24 - Order Confirmation Page
+
+## Overview
+In this milestone, we implemented the **Order Confirmation Page**, where users can review their order details before finalizing the purchase.
+
+## Features Implemented
+###  Frontend:
+- Created an **Order Confirmation Page** that displays:
+  - All products in the order.
+  - The selected delivery address.
+  - The total order value.
+- Added a **"Place Order"** button at the bottom of the page.
