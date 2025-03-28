@@ -33,7 +33,7 @@ const ProductSchema =new mongoose.Schema(
     email:{
         type:String,
         require:true,
-        // match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/,"please add a valid email address"]
+        match:[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/,'Please enter a valid email address']
     
     },
     

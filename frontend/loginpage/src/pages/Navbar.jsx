@@ -1,33 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
+import axios from "axios";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  return (
-    <nav className="bg-white shadow-lg fixed w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo Section */}
-          <div className="text-blue-600 font-bold text-xl">Ecommerce</div>
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        let response = await axios.get("http://localhost:8181/user/checklogin", {
+          withCredentials: true,
+        });
 
-          {/* Desktop Navigation (All links aligned to one side) */}
-          <div className="hidden md:flex space-x-6 ml-auto">
+        if (response.status === 200) {
+          setIsLogin(true);
+        }
+      } catch (error) {
+        console.log("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  return (
+    <nav className="bg-blue-600 fixed w-full z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          {/* Logo */}
+          <div className="text-white font-bold text-xl">Ecommerce</div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-6">
             <NavLink
               to="/"
               end
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? "text-blue-600 font-semibold"
-                    : "text-gray-600 hover:text-blue-600"
-                }`
+                isActive
+                  ? "text-white font-semibold px-3 py-2 rounded-md text-sm"
+                  : "text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm"
               }
             >
               Home
@@ -35,11 +54,9 @@ const NavBar = () => {
             <NavLink
               to="/create"
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? "text-blue-600 font-semibold"
-                    : "text-gray-600 hover:text-blue-600"
-                }`
+                isActive
+                  ? "text-white font-semibold px-3 py-2 rounded-md text-sm"
+                  : "text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm"
               }
             >
               Add Products
@@ -47,27 +64,33 @@ const NavBar = () => {
             <NavLink
               to="/cart"
               className={({ isActive }) =>
-                `px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? "text-blue-600 font-semibold"
-                    : "text-gray-600 hover:text-blue-600"
-                }`
+                isActive
+                  ? "text-white font-semibold px-3 py-2 rounded-md text-sm"
+                  : "text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm"
               }
             >
               Cart
             </NavLink>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                `px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+          </div>
+
+          {/* Profile/Login Section */}
+          <div className="hidden md:flex items-center ml-auto">
+            {isLogin ? (
+              <NavLink to="/profile">
+                <CgProfile className="w-[35px] h-[35px] text-white" />
+              </NavLink>
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
                   isActive
-                    ? "text-blue-600 font-semibold"
-                    : "text-gray-600 hover:text-blue-600"
-                }`
-              }
-            >
-              Login
-            </NavLink>
+                    ? "text-white font-semibold px-3 py-2 rounded-md text-sm"
+                    : "text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm"
+                }
+              >
+                Login
+              </NavLink>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -75,7 +98,7 @@ const NavBar = () => {
             <button
               onClick={toggleMenu}
               type="button"
-              className="text-gray-600 hover:text-blue-600 focus:outline-none"
+              className="text-gray-200 hover:text-white focus:outline-none"
               aria-label="Toggle menu"
             >
               {isOpen ? <IoClose size={24} /> : <GiHamburgerMenu size={24} />}
@@ -86,18 +109,16 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white py-2 px-4 shadow-lg border-t">
+        <div className="md:hidden bg-blue-600 py-2 px-4 shadow-lg border-t">
           <ul className="space-y-2">
             <li>
               <NavLink
                 to="/"
                 end
                 className={({ isActive }) =>
-                  `block px-4 py-2 rounded-md text-base transition-all duration-300 ${
-                    isActive
-                      ? "text-blue-600 font-semibold"
-                      : "text-gray-600 hover:text-blue-600"
-                  }`
+                  isActive
+                    ? "block text-white font-semibold px-3 py-2 rounded-md text-base"
+                    : "block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base"
                 }
                 onClick={() => setIsOpen(false)}
               >
@@ -108,11 +129,9 @@ const NavBar = () => {
               <NavLink
                 to="/create"
                 className={({ isActive }) =>
-                  `block px-4 py-2 rounded-md text-base transition-all duration-300 ${
-                    isActive
-                      ? "text-blue-600 font-semibold"
-                      : "text-gray-600 hover:text-blue-600"
-                  }`
+                  isActive
+                    ? "block text-white font-semibold px-3 py-2 rounded-md text-base"
+                    : "block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base"
                 }
                 onClick={() => setIsOpen(false)}
               >
@@ -123,11 +142,9 @@ const NavBar = () => {
               <NavLink
                 to="/cart"
                 className={({ isActive }) =>
-                  `block px-4 py-2 rounded-md text-base transition-all duration-300 ${
-                    isActive
-                      ? "text-blue-600 font-semibold"
-                      : "text-gray-600 hover:text-blue-600"
-                  }`
+                  isActive
+                    ? "block text-white font-semibold px-3 py-2 rounded-md text-base"
+                    : "block text-gray-200 hover:text-white px-3 py-2 rounded-md text-base"
                 }
                 onClick={() => setIsOpen(false)}
               >
@@ -135,19 +152,23 @@ const NavBar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  `block px-4 py-2 rounded-md text-base transition-all duration-300 ${
+              {isLogin ? (
+                <NavLink to="/profile" onClick={() => setIsOpen(false)}>
+                  <CgProfile className="w-[30px] h-[30px] text-white" />
+                </NavLink>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
                     isActive
-                      ? "text-blue-600 font-semibold"
-                      : "text-gray-600 hover:text-blue-600"
-                  }`
-                }
-                onClick={() => setIsOpen(false)}
-              >
-                Login
-              </NavLink>
+                      ? "block text-white font-semibold px-3 py-2 rounded-md text-sm"
+                      : "block text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm"
+                  }
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </NavLink>
+              )}
             </li>
           </ul>
         </div>
@@ -157,3 +178,14 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+
+
+
+
+
+
+
+
+
+

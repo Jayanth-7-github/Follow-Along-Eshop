@@ -8,7 +8,7 @@ export default function ProductCard({ _id, email, name, description, category, t
   const edit = () => {
     navigate("/create", { state: { _id, email, name, description, category, tags, price, stock, images, role, edit: true } });
   };
-
+ 
 
 
   const editDeleteButtons = () => (
@@ -51,13 +51,7 @@ export default function ProductCard({ _id, email, name, description, category, t
       <h2 className="text-lg font-semibold text-gray-800 mb-1">{name}</h2>
       <p className="text-sm text-gray-600 opacity-80 line-clamp-3">{description}</p>
       <p className="text-lg font-bold text-gray-900 mt-2">${price}</p>
-      {/* <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-full text-white px-4 py-2 mt-2 rounded-md bg-indigo-600 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition-all duration-300"
-      >
-        More Info
-      </motion.button> */}
+      
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}

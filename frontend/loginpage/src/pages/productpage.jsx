@@ -33,7 +33,8 @@ export default function ProductPage() {
 
   const addtocart=(id)=>{
     console.log("hbhb")
-     navigate("/cart",{state:{id}})
+    console.log(id)
+     navigate("/pro",{state:{id}})
 
   }
 
