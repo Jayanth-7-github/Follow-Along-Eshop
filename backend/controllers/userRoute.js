@@ -112,7 +112,7 @@ userRoute.get("/activation/:token", catchAsyncError(async (req, res, next) => {
     let id = decoded.id
     await UserModel.findByIdAndUpdate(id, { isActivated: true })
 
-    res.redirect("http://localhost:5176/login")
+    res.redirect("http://localhost:5173/login")
 
     res.status(200).json({ status: true, message: "activation is completed" })
 
@@ -133,6 +133,12 @@ userRoute.post("/upload", auth, upload.single("photo"), catchAsyncError(async (r
   let updated = await UserModel.findByIdAndUpdate(userId, { profilePhoto: fileName }, { new: true })
   res.status(200).json({ message: updated })
 }))
+
+
+
+
+
+
 
 userRoute.post("/login", catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;

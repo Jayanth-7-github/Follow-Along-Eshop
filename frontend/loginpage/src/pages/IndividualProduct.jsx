@@ -1,11 +1,14 @@
 import { useState,useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import {useLocation} from "react-router-dom"
+import {useLocation,useNavigate} from "react-router-dom"
 import axios from "axios";
 
 
 const IndividualProduct = () => {
      
+
+    const navigate=useNavigate()
+
     let location =useLocation()
     let id=location.state.id
      console.log(id)
@@ -59,6 +62,8 @@ const IndividualProduct = () => {
             if(response.status==200){
                 console.log("added to cart")
             }
+            navigate("/cart")
+
             
         } catch (error){
             console.log(error)
