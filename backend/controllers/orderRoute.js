@@ -1,10 +1,10 @@
 let express=require("express")
 const ProductModel  = require("../model/productModel");
-const catchAsyncError = require("../middleware/catchAsyncError");
+const catchAsyncError = require("../middelware/catchAsyncError");
 const Errorhadler=require("../utils/errorhadler")
 const orderRouter= express.Router()
-const UserModel = require("../model/userModel")
-const auth = require("../middleware/auth")
+const {UserModel} = require("../model/userModel")
+const auth = require("../middelware/auth")
 const orderModel = require("../model/orderModel")
 const mongoose=require("mongoose")
 
@@ -76,12 +76,6 @@ orderRouter.post("/place-order", auth, catchAsyncError(async (req, res, next) =>
       await session.commitTransaction();
       session.endSession();
   
-      await sendMail({
-        email: mailId,
-        subject: "Order placed successfully",
-        message: `Hello ${userName}, your order has been placed successfully.`,
-      });
-  
       res.status(201).json({
         success: true,
         message: "Order placed successfully"
@@ -144,5 +138,5 @@ orderRouter.post("/place-order", auth, catchAsyncError(async (req, res, next) =>
 
 
 
-  module.exports=orderRouter
+  module.exports={orderRouter}
   

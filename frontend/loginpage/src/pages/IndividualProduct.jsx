@@ -74,7 +74,7 @@ const IndividualProduct = () => {
 
     return (
        
-        <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="max-w-md mx-auto bg-white relative top-17 shadow-lg rounded-lg overflow-hidden">
          
              
 

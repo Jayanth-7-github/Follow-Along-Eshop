@@ -12,9 +12,10 @@ const {connect}=require("./db/connection")
 
 app.listen(port,async()=>{
     try{
-        await connect
+       
         
         console.log(`app is running on http://localhost:${port}`)
+        await connect
     }
     catch(err){
         console.log(err)

@@ -63,7 +63,7 @@ function Order() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 p-4 max-w-4xl mx-auto">
+    <div className="flex flex-col relative top-12 md:flex-row gap-4 p-4 max-w-4xl mx-auto">
       {/* Address Section */}
       <div className="w-full md:w-1/2 p-4 border rounded-lg overflow-auto max-h-64">
         <h2 className="text-lg font-semibold mb-2">Select Address</h2>

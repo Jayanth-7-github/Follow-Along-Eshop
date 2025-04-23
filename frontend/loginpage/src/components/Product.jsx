@@ -37,7 +37,7 @@ export default function ProductCard({ _id, email, name, description, category, t
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.05 }}
-      className="bg-white p-4 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl cursor-pointer flex flex-col justify-between max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
+      className="bg-white p-4 relative top-15 rounded-xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-2xl cursor-pointer flex flex-col justify-between max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg"
     >
       <div className="relative">
         <IoIosArrowBack className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-2xl" />
